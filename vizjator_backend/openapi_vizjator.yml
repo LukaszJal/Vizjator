@@ -1,0 +1,64 @@
+openapi: 3.1.0
+info:
+  title: Vizjator Backend API
+  version: 1.0.0
+  description: API do generowania diagramów UML i BPMN na podstawie opisów tekstowych.
+
+paths:
+  /generate-diagram:
+    post:
+      summary: Generuj diagram na podstawie opisu tekstowego
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - description
+                - model_type
+              properties:
+                description:
+                  type: string
+                  description: Opis procesu/systemu do przetworzenia przez LLM
+                model_type:
+                  type: string
+                  enum: [BPMN, UML_USE_CASE, UML_CLASS, UML_SEQUENCE, UML_ACTIVITY, C4_CONTEXT, C4_CONTAINER]
+                  description: Typ diagramu do wygenerowania
+                target_language:
+                  type: string
+                  enum: [PL, EN]
+                  default: PL
+                detail_level:
+                  type: string
+                  enum: [low, medium, high]
+                  default: medium
+                style:
+                  type: string
+                  enum: [plantuml, mermaid, json, xml]
+                  default: plantuml
+                annotations:
+                  type: boolean
+                  default: false
+                context_id:
+                  type: string
+                  format: uuid
+                user_id:
+                  type: string
+                  format: uuid
+      responses:
+        '200':
+          description: Poprawnie wygenerowany kod diagramu
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  diagram_code:
+                    type: string
+                    description: Kod diagramu w wybranym stylu (np. PlantUML)
+                  format:
+                    type: string
+                    description: Styl formatowania diagramu
+        '400':
+          description: Błędne dane wejściowe

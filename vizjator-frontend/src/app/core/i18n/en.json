@@ -1,0 +1,7 @@
+{
+  "TITLE": "Diagram Generator",
+  "DESCRIPTION": "Enter the process or system description",
+  "MODEL_TYPE": "Diagram Type",
+  "SUBMIT": "Generate",
+  "RESULT": "Result"
+}

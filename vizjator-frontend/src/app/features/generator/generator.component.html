@@ -1,0 +1,22 @@
+<h1>{{ 'TITLE' | translate }}</h1>
+
+<mat-form-field appearance="fill">
+  <mat-label>{{ 'DESCRIPTION' | translate }}</mat-label>
+  <textarea matInput [(ngModel)]="description"></textarea>
+</mat-form-field>
+
+<mat-form-field appearance="fill">
+  <mat-label>{{ 'MODEL_TYPE' | translate }}</mat-label>
+  <mat-select [(ngModel)]="modelType">
+    <mat-option *ngFor="let type of modelTypes" [value]="type">{{ type }}</mat-option>
+  </mat-select>
+</mat-form-field>
+
+<button mat-raised-button color="primary" (click)="generate()">{{ 'SUBMIT' | translate }}</button>
+
+<div *ngIf="result">
+  <h3>{{ 'RESULT' | translate }}</h3>
+  <pre>{{ result | json }}</pre>
+</div>
+
+<app-preview [code]="result?.diagram_code"></app-preview>
